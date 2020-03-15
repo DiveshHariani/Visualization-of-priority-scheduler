@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 class HomePage:
     def __init__(self,root):
+        root.bind('<Return>', self.getData)
         self.frame = Frame(root,height=1024, width=1024,bg='white')
         self.frame.pack()
         self.frame.pack_propagate(0)
@@ -41,8 +42,8 @@ class HomePage:
         self.submit.config(image=self.img)
         self.submit.place(x=450, y=500)
 
-    def getData(self):
-        num_of_pro = int(self.spin.get())
+    def getData(self, event=None):
+        num_of_pro = int(self.spin.get(),10)
         pid = tuple(self.pid_entry.get().split(','))
         try:
             pri = tuple(int(x) for x in self.pri_entry.get().split(','))

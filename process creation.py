@@ -1,0 +1,69 @@
+from tkinter import *
+from tkinter import ttk
+from tkinter import messagebox
+
+class HomePage:
+    def __init__(self,root):
+        self.frame = Frame(root,height=1024, width=1024,bg='white')
+        self.frame.pack()
+        self.frame.pack_propagate(0)
+
+        self.header=Label(self.frame, text='Create process', font=('Eras Demi ITC bold',30), bg='white')
+        self.header.place(x=280, y=25)
+
+        self.num_label = Label(self.frame, text='Enter number of processes : ', font=('Arial',15), bg='white')
+        self.num_label.place(x=80, y=150)
+
+        self.pid_label = Label(self.frame, text='Enter process ids(seperated by \',\') : ', font=('Arial',15), bg='white')
+        self.pid_label.place(x=80, y=250)
+
+        self.pri_label = Label(self.frame, text='Enter priorities(seperated by \',\') : ', font=('Arial',15), bg='white')
+        self.pri_label.place(x=80, y=350)
+
+        self.bt_label = Label(self.frame, text='Enter burst times(seperated by \',\') : ', font=('Arial',15), bg='white')
+        self.bt_label.place(x=80, y=450)
+
+
+        self.spin = ttk.Spinbox(self.frame, from_=1, to=10)
+        self.spin.place(x=350, y=155)
+
+        self.pid_entry = ttk.Entry(self.frame, width=30, justify=CENTER, font=('Arial',15))
+        self.pid_entry.place(x=400, y=252)\
+
+        self.pri_entry = ttk.Entry(self.frame, width=30, justify=CENTER, font=('Arial', 15))
+        self.pri_entry.place(x=400, y=352)
+
+        self.bt_entry = ttk.Entry(self.frame, width=30, justify=CENTER, font=('Arial', 15))
+        self.bt_entry.place(x=400, y=452)
+
+        self.submit = Button(self.frame, height=40, width=40, bg='white', command = self.getData, borderwidth=0, highlightthickness=0)
+        self.img = PhotoImage(file='E:\\add.png')
+        self.submit.config(image=self.img)
+        self.submit.place(x=450, y=500)
+
+    def getData(self):
+        num_of_pro = int(self.spin.get())
+        pid = tuple(self.pid_entry.get().split(','))
+        try:
+            pri = tuple(int(x) for x in self.pri_entry.get().split(','))
+            bt = tuple(self.bt_entry.get().split(','))
+        except ValueError:
+            messagebox.showerror('Invalid','Invalid entry in priority or burst time')
+        if num_of_pro == len(pid) and num_of_pro == len(pri) and num_of_pro == len(bt):
+            self.frame.destroy()
+            MainPage(window,number = num_of_pro,process = pid,priority=pri, bursts = bt)
+        else:
+            messagebox.showwarning('Invalid entry', "Please enter valid data")
+
+class MainPage:
+    def __init__(self,root,**kwargs):
+        self.frame = Frame(root, height=1024, width=1024)
+        self.frame.pack()
+        self.frame.pack_propagate(0)
+        self.label_new = Label(self.frame, text=kwargs['number'])
+        self.label_new.grid(row=0, column=1)
+
+window=Tk()
+window.geometry('1024x1024')
+HomePage(window)
+window.mainloop()

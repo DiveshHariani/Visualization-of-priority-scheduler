@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from page2 import MainPage
 
 class HomePage:
     def __init__(self,root):
@@ -26,6 +27,7 @@ class HomePage:
 
 
         self.spin = ttk.Spinbox(self.frame, from_=1, to=10)
+        self.spin.focus()
         self.spin.place(x=350, y=155)
 
         self.pid_entry = ttk.Entry(self.frame, width=30, justify=CENTER, font=('Arial',15))
@@ -56,13 +58,7 @@ class HomePage:
         else:
             messagebox.showwarning('Invalid entry', "Please enter valid data")
 
-class MainPage:
-    def __init__(self,root,**kwargs):
-        self.frame = Frame(root, height=1024, width=1024)
-        self.frame.pack()
-        self.frame.pack_propagate(0)
-        self.label_new = Label(self.frame, text=kwargs['number'])
-        self.label_new.grid(row=0, column=1)
+
 
 window=Tk()
 window.geometry('1024x1024')
